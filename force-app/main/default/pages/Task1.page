@@ -1,0 +1,24 @@
+<apex:page controller="Task1">
+   
+    <apex:selectList value="{! filterId }" size="1">
+        <apex:selectOptions value="{! listViewOptions }"/>
+        <apex:actionSupport event="onchange" reRender="contacts_list"/>
+    </apex:selectList>
+
+
+    
+    <apex:repeat value="{!Students}" var="st" id="students_list">
+      
+    </apex:repeat>
+
+    <apex:repeat value="{!Mentors}" var="me">
+            <apex:outputLink onclick="/?id={!me.Id}">
+                {!me.Name}
+            </apex:outputLink>
+            {!me.Designation__c}
+           <br/>
+    </apex:repeat> 
+  
+
+
+</apex:page>

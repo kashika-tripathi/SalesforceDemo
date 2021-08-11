@@ -1,0 +1,80 @@
+<aura:component controller="ObjectDropdownController">
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="options" type="List"/>
+    <aura:attribute name="selectedValue" type="String"/>
+
+    <aura:attribute name="dualOptions" type="List"/>
+    <aura:attribute name="selectedFields" type="List"/>
+
+    <aura:attribute name="queryBoxText" type="String"/>
+
+
+
+    <!-- <aura:attribute name="data" type="List"/> -->
+    <!-- <aura:attribute name="data" type="sObject[]"/> -->
+    <aura:attribute name="data" type="List[]"/>
+
+    <lightning:select name="objects" aura:id="dropdown" value="{!v.selectedValue}" onchange="{!c.handleSelection}" required="true" label="Select your object" >
+        <aura:iteration items="{!v.options}" var="PerItem">
+            <option value="{!PerItem}" text="{!PerItem}"/>
+        </aura:iteration>
+    </lightning:select>
+
+    <lightning:dualListbox name="fields"
+        aura:id="fieldsValue"
+        label= "Select Fields"
+        sourceLabel="Available Fields"
+        selectedLabel="Selected Fields"
+        fieldLevelHelp="Select your field"
+        options="{!v.dualOptions}"
+        value="{!v.selectedFields}"
+        onchange="{! c.getQuery }"/>
+
+    <lightning:textarea name="queryArea" aura:id="queryTxt" readonly="true" value="{!v.queryBoxText}" label="Your Query" />
+
+    <lightning:button variant="brand" label="Find Your result of Query"  onclick="{!c.getResult}" class="slds-m-left_x-small"/>
+
+    <!-- <lightning:card>
+        <aura:iteration items="{!v.data}" var="rec">
+            <div class="slds-grid slds-grid_align-space slds-box">
+                <lightning:recordViewForm recordId="{!rec.Id}" objectApiName="{!v.selectedValue}">
+                    <aura:iteration items="{!v.selectedFields}" var="fld">
+                        <td class="slds-col slds-size_4-of-12 slds-p-horizontal_medium">
+                            <lightning:outputField fieldName="{!fld}" />
+                        </td>
+                    </aura:iteration>
+                </lightning:recordViewForm>
+            </div>
+        </aura:iteration>
+    </lightning:card> -->
+
+    <table>
+        <thead>
+            <aura:iteration items="{!v.selectedFields}" var="fld">
+                <th>{!fld}</th>
+                    
+            </aura:iteration>
+
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.data}" var="object">
+                <tr>
+                    <aura:iteration items="{!object}" var="value">
+                        <td>{!value}</td>
+                    </aura:iteration>
+
+                </tr>
+               
+            </aura:iteration>
+
+        </tbody>
+    </table>
+
+    <!-- <lightning:datatable data="{!v.data }" 
+        columns="{!v.mycolumn }" 
+        keyField="id"
+        hideCheckboxColumn="false" /> -->
+
+
+</aura:component>	

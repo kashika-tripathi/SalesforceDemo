@@ -1,0 +1,35 @@
+<apex:page controller="Task1">
+    <div class="body">
+        <div class="table-responsive">
+       
+            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Designation</th>
+                   </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!Mentors}" var="fac" >
+                        <tr>               
+                            <td><a onclick="students_list"><apex:outputField value="{!fac.Name}" id="Name"/></a></td>
+                            <td><apex:outputField value="{!fac.Designation__c}" id="Course"/></td>
+                        </tr>
+                   </apex:repeat>
+             </tbody>             
+            </table>
+        </div>
+    </div>
+
+           
+
+    <apex:repeat value="{!Students}" var="me" id="students_list">
+        {! me.Name}
+        {! me.City__c}
+        <br/>
+ </apex:repeat> 
+</apex:page>
+
+   
+       
+    

@@ -1,0 +1,69 @@
+<apex:page controller="InstituteController">
+<apex:form>
+    <apex:selectList value="{!selectedInstitute}" size="1">
+        <apex:selectOptions value="{!listOfInstitute}"></apex:selectOptions>
+        <apex:actionSupport event="onchange" reRender="mentors_list" action="{!getMentors}"></apex:actionSupport>
+    </apex:selectList>       
+</apex:form>
+
+<apex:outputPanel id="mentors_list" rendered="{!if(selectedInstitute!='0',true,false)}">
+    <table style="border:1px" >
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Designation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <apex:repeat value="{!mentors}" var="mentor">
+                <tr>
+                    <td>            
+                        <apex:form>
+                            <apex:commandLink value="{! mentor.Name}" action="{!getStudents}"  >
+                                <apex:param name="students_list" value="{! mentor.Id}" assignTo="{!selectedMentor}" />           
+                            </apex:commandLink>
+                        </apex:form> 
+                    </td>
+
+                    <td><apex:outputField value="{!mentor.Designation__c}"/></td>
+                        
+                    <td>
+                        <apex:outputPanel id="students_list" rendered="{!if(selectedMentor!=mentor.Id,false,true)}">
+                                <tr>
+                                    <td><b>Name</b></td>
+                                    <td><b>Class</b></td>
+                                    <td><b>City</b></td>
+                                    <td><b>State</b></td>
+                                </tr>
+                            
+                                <apex:repeat value="{!studentList}" var="student">
+                                    <tr>
+                                        <td>{!student.Name}</td>
+                                        <td>{!student.Class__c}</td>
+                                        <td>{!student.City__c}</td>
+                                        <td>{!student.State__c}</td>
+                                    </tr>
+
+                                </apex:repeat>
+                            
+                    </apex:outputPanel>
+
+                    </td>
+                    
+                </tr>
+        
+            </apex:repeat>      
+
+
+        </tbody>
+    </table>
+    
+</apex:outputPanel>
+
+
+
+</apex:page>
+
+
+
+
